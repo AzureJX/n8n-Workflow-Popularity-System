@@ -1,0 +1,64 @@
+n8n Workflow Popularity System
+
+A FastAPI-based system to collect, store, and display the most popular n8n workflows from multiple sources (YouTube, n8n Forum, Google Trends). The system automatically stores collected workflows in a SQLite database and provides a simple web interface to view and add more data.
+
+- Features
+
+1. Collect real workflow data from:
+YouTube (views, likes, comments, engagement ratios)
+n8n Forum (Discourse) (replies, likes, contributors, views)
+Google Trends (search interest over time)
+
+2. Store workflows in SQLite (workflows.db)
+
+3. Serve workflows via JSON API and human-friendly HTML pages
+
+4. Automatic daily updates using APScheduler
+
+5. Manual refresh button to add new workflows
+
+6. Results page to view collected workflows with details
+
+- Installation
+
+Create a virtual environment (recommended):
+python -m venv venv
+source venv/bin/activate   # macOS/Linux
+venv\Scripts\activate      # Windows
+
+Install dependencies from requirements.txt:
+pip install -r requirements.txt
+
+- Usage
+
+Start the FastAPI server:
+uvicorn app:app --reload
+
+Open the web interface
+Visit in your browser:
+http://127.0.0.1:8000
+
+Buttons on the main page
+1. Add Data (Refresh):
+Collects new workflow data from YouTube, n8n Forum, and Google Trends. Shows how many workflows were added. It may take a while to load the data.
+2. See Results:
+Displays all workflows currently stored in the SQLite database in a readable HTML table. At the end of the result page, you will see a link to go back to the main page.
+
+- Automatic Daily Updates
+
+The system uses APScheduler to automatically refresh workflows daily at 8 AM. You can adjust the schedule in app.py:
+scheduler.add_job(collect_all, "cron", hour=8, minute=0)
+
+- Database
+
+All workflows are stored in SQLite: workflows.db
+Columns:
+id, workflow, platform, popularity_metrics (JSON), country, collected_at
+
+- Notes
+
+I used my own YouTube API key.
+
+Google Trends collection does not require an API key, but requests may be throttled if too frequent.
+
+Discourse collector fetches public topics; no API key is required.
