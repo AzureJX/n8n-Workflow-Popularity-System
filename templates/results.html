@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Workflow Results</title>
+</head>
+<body>
+    <h1>Collected Workflows</h1>
+
+    {% if workflows %}
+        <table border="1" cellpadding="6">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Workflow</th>
+                    <th>Platform</th>
+                    <th>Popularity Metrics</th>
+                    <th>Country</th>
+                    <th>Collected At</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for wf in workflows %}
+                <tr>
+                    <td>{{ wf.id }}</td>
+                    <td>{{ wf.workflow }}</td>
+                    <td>{{ wf.platform }}</td>
+                    <td><pre>{{ wf.popularity_metrics }}</pre></td>
+                    <td>{{ wf.country }}</td>
+                    <td>{{ wf.collected_at }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No workflows collected yet.</p>
+    {% endif %}
+
+    <br>
+    <a href="/">⬅ Back to Main Page</a>
+</body>
+</html>
